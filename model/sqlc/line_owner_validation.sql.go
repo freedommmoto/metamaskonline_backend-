@@ -34,6 +34,16 @@ func (q *Queries) InsertLineOwnerValidation(ctx context.Context, arg InsertLineO
 	return i, err
 }
 
+const selectCodeActive = `-- name: SelectCodeActive :one
+select code from line_owner_validation where code=$1 and deleted is null
+`
+
+func (q *Queries) SelectCodeActive(ctx context.Context, code string) (string, error) {
+	row := q.db.QueryRowContext(ctx, selectCodeActive, code)
+	err := row.Scan(&code)
+	return code, err
+}
+
 const selectLineOwnerValidationByID = `-- name: SelectLineOwnerValidationByID :one
 select id_line_owner_validation, code, id_user, created_at, deleted from line_owner_validation where id_user=$1 order by created_at desc limit 1
 `
