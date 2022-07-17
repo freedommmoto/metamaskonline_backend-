@@ -12,6 +12,7 @@ type ConfigObject struct {
 	DBSource            string        `mapstructure:"DB_SOUECE"`
 	ServerAddress       string        `mapstructure:"SERVER_ADDRESS"`
 	TokenConfigKey      string        `mapstructure:"TOKEN_SYMMETRIC_KEY"`
+	PusherKey           string        `mapstructure:"PUSHER_KEY"`
 	TokenLiftTimeConfig time.Duration `mapstructure:"ACCESS_TOKEN_DURATION_TIME"`
 }
 

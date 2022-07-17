@@ -43,6 +43,11 @@ func main() {
 
 	connectDB()
 
+	//run pg notifier for update pusher when code have been update.
+	notifier, err := tool.NewNotifier(Config.DBSource, "code_confirm", Config)
+	ch := make(chan []byte)
+	go notifier.Fetch(ch)
+
 	//Makefile gin server
 	server, err := api.NewServer(config, MainQueries)
 	if err != nil {
