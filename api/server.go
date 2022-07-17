@@ -22,6 +22,7 @@ func NewServer(config tool.ConfigObject, store *db.Queries) (*Server, error) {
 	}
 
 	router.GET("/user/id/:id", server.getUserByID)
+	router.POST("/user/new", server.addNewUser)
 	server.router = router
 	return server, nil
 }
