@@ -83,7 +83,7 @@ func (server *Server) addNewUser(ctx *gin.Context) {
 	//insert code
 	insertCodeParam := db.InsertLineOwnerValidationParams{
 		IDUser:    user.IDUser,
-		Code:      tool.RandomCodeNumber(4),
+		Code:      tool.RandomCodeNumber(4, server.store),
 		CreatedAt: time.Now(),
 	}
 	LineOwnerValidation, errInsertCode := server.store.InsertLineOwnerValidation(context.Background(), insertCodeParam)
