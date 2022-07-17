@@ -40,10 +40,10 @@ func main() {
 		log.Fatal("cannot load config file:", err)
 	}
 	Config = config
-	
+
 	connectDB()
 
-	//make gin server
+	//Makefile gin server
 	server, err := api.NewServer(config, MainQueries)
 	if err != nil {
 		log.Fatal("can't NewServer", err)

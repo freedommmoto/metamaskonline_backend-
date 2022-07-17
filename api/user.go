@@ -11,6 +11,7 @@ import (
 type UserResponse struct {
 	Username   string `json:"username"`
 	Validation bool   `json:"validation"`
+	Code       string `json:"code"`
 }
 
 type GetUserInput struct {
@@ -36,14 +37,20 @@ func (server *Server) getUserByID(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, makeErrorReturnFormat(err))
 		return
 	}
+	LineOwnerValidation, errSelectLineOwner := server.store.SelectLineOwnerValidationByID(context.Background(), request.Id)
+	if errSelectLineOwner != nil {
+		ctx.JSON(http.StatusInternalServerError, makeErrorReturnFormat(err))
+		return
+	}
 
-	ctx.JSON(http.StatusOK, tranFerUserToUserResponse(user))
+	ctx.JSON(http.StatusOK, tranFerUserToUserResponse(user, LineOwnerValidation))
 }
 
-func tranFerUserToUserResponse(user db.User) UserResponse {
+func tranFerUserToUserResponse(user db.User, code db.LineOwnerValidation) UserResponse {
 	newUser := UserResponse{
 		Username:   user.Username,
 		Validation: user.OwnerValidation,
+		Code:       code.Code,
 	}
 	return newUser
 }
