@@ -21,6 +21,7 @@ func NewServer(config tool.ConfigObject, store *db.Queries) (*Server, error) {
 		router: router,
 	}
 
+	//router.GET("/testcallpusher", server.pusherWebhook)
 	router.GET("/user/id/:id", server.getUserByID)
 	router.POST("/user/new", server.addNewUser)
 	server.router = router
@@ -30,3 +31,7 @@ func NewServer(config tool.ConfigObject, store *db.Queries) (*Server, error) {
 func (server *Server) Start(address string) error {
 	return server.router.Run(address)
 }
+
+//func (server *Server) pusherWebhook(ctx *gin.Context) {
+//	tool.CallPusherClient("1")
+//}
